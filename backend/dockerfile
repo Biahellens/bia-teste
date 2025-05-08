@@ -6,9 +6,10 @@ COPY package.json pnpm-lock.yaml ./
 RUN npm install -g pnpm
 RUN pnpm install --frozen-lockfile
 
+RUN mkdir -p uploads
+
 COPY . .
 
-# Garante que, mesmo após copiar o código completo, dependências novas sejam resolvidas
 RUN pnpm install
 
 RUN pnpm build
