@@ -1,17 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Workspace } from './workspace.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Workspace } from "./workspace.entity";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+	@PrimaryGeneratedColumn()
+	id: number;
 
-  @Column({ unique: true })
-  email: string;
+	@Column({ unique: true })
+	email: string;
 
-  @Column()
-  passwordHash: string;
+	@Column()
+	passwordHash: string;
 
-  @OneToMany(() => Workspace, (workspace) => workspace.user)
-  workspaces: Workspace[];
+	@OneToMany(
+		() => Workspace,
+		(workspace) => workspace.user,
+	)
+	workspaces: Workspace[];
 }

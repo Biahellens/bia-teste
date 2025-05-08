@@ -1,30 +1,33 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
-import { Document } from './document.entity';
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	ManyToOne,
+	JoinColumn,
+} from "typeorm";
+import { Document } from "./document.entity";
 
 @Entity()
 export class Embedding {
-  @PrimaryGeneratedColumn()
-  id: number;
+	@PrimaryGeneratedColumn()
+	id: number;
 
-  @ManyToOne(() => Document, (document) => document.embeddings)
-  @JoinColumn({ name: 'documentId' })
-  document: Document;
+	@ManyToOne(
+		() => Document,
+		(document) => document.embeddings,
+	)
+	@JoinColumn({ name: "documentId" })
+	document: Document;
 
-  @Column()
-  documentId: number;
+	@Column()
+	documentId: number;
 
-  @Column({ type: 'varchar', array: true })
-  vector: number[];
+	@Column({ type: "varchar", array: true })
+	vector: number[];
 
-  @Column()
-  chunk: string;
+	@Column()
+	chunk: string;
 
-  @Column({ type: 'integer' })
-  chunkOrder: number;
+	@Column({ type: "integer" })
+	chunkOrder: number;
 }
