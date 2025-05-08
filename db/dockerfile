@@ -1,0 +1,7 @@
+FROM postgres:15
+
+# Instala as dependências necessárias e o pgvector oficial
+RUN apt-get update && \
+    apt-get install -y postgresql-15-pgvector postgresql-contrib wget && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
