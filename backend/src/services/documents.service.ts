@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
 import { Document } from '../entities/document.entity';
 import { Workspace } from '../entities/workspace.entity';
+import { promises as fs } from 'node:fs';
+import { join } from 'node:path';
 
 @Injectable()
 export class DocumentsService {
@@ -11,7 +13,7 @@ export class DocumentsService {
     private readonly documentRepository: Repository<Document>,
     @InjectRepository(Workspace)
     private readonly workspaceRepository: Repository<Workspace>,
-  ) {}
+  ) { }
 
   async uploadDocument(
     file: Express.Multer.File,
@@ -31,6 +33,27 @@ export class DocumentsService {
       workspace,
     });
 
-    return this.documentRepository.save(document);
+    const savedDocument = await this.documentRepository.save(document);
+
+    if (file.mimetype === 'text/plain') {
+      try {
+        const filePath = join(process.cwd(), file.path);
+        const content = await fs.readFile(filePath, 'utf-8');
+        savedDocument.content = content;
+        await this.documentRepository.save(savedDocument);
+      } catch (error) {
+        console.error('Error reading text file:', error);
+        savedDocument.errorMessage = 'Error reading file content';
+        savedDocument.status = 'failed';
+        await this.documentRepository.save(savedDocument);
+      } finally {
+        await fs.unlink(join(process.cwd(), file.path));
+      }
+    } else {
+      savedDocument.status = 'completed';
+      await this.documentRepository.save(savedDocument);
+    }
+
+    return savedDocument;
   }
 }

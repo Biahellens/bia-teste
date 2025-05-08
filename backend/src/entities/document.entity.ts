@@ -46,5 +46,9 @@ export class Document {
 	status: "pending" | "processing" | "completed" | "failed";
 
 	@Column({ nullable: true })
-	errorMessage: string;
+  errorMessage: string;
+
+  @Column({ type: 'text', nullable: true })
+  content: string;
+
 }
