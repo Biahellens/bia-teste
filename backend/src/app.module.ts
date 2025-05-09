@@ -9,6 +9,7 @@ import { Embedding } from "./entities/embedding.entity";
 import { DocumentsModule } from "./modules/documents.module";
 import { EmbeddingsModule } from "./modules/embeddings.module";
 import { ConfigModule } from '@nestjs/config';
+import { SearchModule } from "./modules/search.module";
 
 @Module({
 	imports: [
@@ -39,6 +40,7 @@ import { ConfigModule } from '@nestjs/config';
 		}),
 		DocumentsModule,
 		EmbeddingsModule,
+		SearchModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

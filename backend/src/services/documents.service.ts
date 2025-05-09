@@ -50,7 +50,7 @@ export class DocumentsService {
         savedDocument.content = content;
         await this.documentRepository.save(savedDocument);
 
-        const chunks = await this.chunkDocumentContent(savedDocument);
+        const chunks = await this.chunkDocumentContent(savedDocument, 500, 50);
         console.log('Document Chunks:', chunks);
 
         const embeddingsPromises = chunks.map(async (chunk) => {
@@ -89,7 +89,7 @@ export class DocumentsService {
     return savedDocument;
   }
 
-  async chunkDocumentContent(document: Document, chunkSize = 500, chunkOverlap = 50): Promise<string[]> {
+  async chunkDocumentContent(document: Document, chunkSize: number, chunkOverlap: number): Promise<string[]> {
     if (!document.content) {
       return [];
     }
