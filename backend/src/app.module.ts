@@ -6,9 +6,16 @@ import { User } from "./entities/user.entity";
 import { Workspace } from "./entities/workspace.entity";
 import { Document } from "./entities/document.entity";
 import { Embedding } from "./entities/embedding.entity";
+import { DocumentsModule } from "./modules/documents.module";
+import { EmbeddingsModule } from "./modules/embeddings.module";
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
 	imports: [
+		ConfigModule.forRoot({
+			isGlobal: true,
+			envFilePath: '.env',
+		}),
 		TypeOrmModule.forRoot({
 			type: "postgres",
 			host: process.env.DATABASE_URL
@@ -30,8 +37,10 @@ import { Embedding } from "./entities/embedding.entity";
 			autoLoadEntities: true,
 			synchronize: true,
 		}),
+		DocumentsModule,
+		EmbeddingsModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

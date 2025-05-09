@@ -5,6 +5,7 @@ import { Document } from '../entities/document.entity';
 import { Workspace } from '../entities/workspace.entity';
 import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
+import type { EmbeddingsService } from './embeddings.service';
 
 @Injectable()
 export class DocumentsService {
@@ -13,6 +14,8 @@ export class DocumentsService {
     private readonly documentRepository: Repository<Document>,
     @InjectRepository(Workspace)
     private readonly workspaceRepository: Repository<Workspace>,
+    private readonly embeddingsService: EmbeddingsService,
+
   ) { }
 
   async uploadDocument(
@@ -40,11 +43,23 @@ export class DocumentsService {
         const filePath = join(process.cwd(), file.path);
         const content = await fs.readFile(filePath, 'utf-8');
         savedDocument.content = content;
+
+        savedDocument.content = content;
         await this.documentRepository.save(savedDocument);
 
-        const chunks = this.chunkDocumentContent(savedDocument);
+        const chunks = await this.chunkDocumentContent(savedDocument);
         console.log('Document Chunks:', chunks);
-        savedDocument.status = 'processing';
+
+        const embeddingsPromises = chunks.map(async (chunk) => {
+          const embedding = await this.embeddingsService.generateEmbedding(chunk);
+          console.log('Embedding:', embedding.slice(0, 5), '...');
+          return { chunk, embedding };
+        });
+
+        const embeddingsResults = await Promise.all(embeddingsPromises);
+        console.log('Embeddings Results:', embeddingsResults.length, 'embeddings generated.');
+
+        savedDocument.status = 'completed';
         await this.documentRepository.save(savedDocument);
       } catch (error) {
         console.error('Error reading text file:', error);
