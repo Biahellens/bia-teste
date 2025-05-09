@@ -56,4 +56,56 @@ export class DocumentsService {
 
     return savedDocument;
   }
+
+  async chunkDocumentContent(document: Document, chunkSize = 500, chunkOverlap = 50): Promise<string[]> {
+    if (!document.content) {
+      return [];
+    }
+
+    const chunks: string[] = [];
+    const lines = document.content.split('\n').filter(line => line.trim() !== '');
+    let currentChunk = '';
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const newLine = currentChunk ? `${currentChunk}\n${line}` : line;
+
+      if (newLine.length > chunkSize) {
+        if (currentChunk) {
+          chunks.push(currentChunk.trim());
+          currentChunk = currentChunk.slice(-chunkOverlap).trim();
+        } else {
+          const words = line.split(' ');
+          let currentLongChunk = '';
+          for (const word of words) {
+            const newLongChunk = currentLongChunk ? `${currentLongChunk} ${word}` : word;
+            if (newLongChunk.length > chunkSize) {
+              if (currentLongChunk) {
+                chunks.push(currentLongChunk.trim());
+                currentLongChunk = word;
+              } else {
+                chunks.push(word.slice(0, chunkSize).trim());
+                currentLongChunk = word.slice(chunkSize).trim();
+              }
+            } else {
+              currentLongChunk = newLongChunk;
+            }
+          }
+          if (currentLongChunk) {
+            currentChunk = currentLongChunk;
+          } else {
+            currentChunk = '';
+          }
+        }
+      } else {
+        currentChunk = newLine;
+      }
+    }
+
+    if (currentChunk) {
+      chunks.push(currentChunk.trim());
+    }
+
+    return chunks;
+  }
 }
