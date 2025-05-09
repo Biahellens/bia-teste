@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
 import { Embedding } from '../entities/embedding.entity';
-import type { EmbeddingsService } from '../services/embeddings.service';
+import type { EmbeddingsService } from './embeddings.service';
 
 @Injectable()
 export class SearchService {
@@ -10,9 +10,9 @@ export class SearchService {
     @InjectRepository(Embedding)
     private readonly embeddingRepository: Repository<Embedding>,
     private readonly embeddingsService: EmbeddingsService,
-  ) { }
+  ) {}
 
-  async search(query: string, topK: number): Promise<Embedding[]> {
+  async search(query: string, topK: number): Promise<{ chunk: string; filename: string }[]> {
     const queryEmbedding = await this.embeddingsService.generateEmbedding(query);
 
     const results = await this.embeddingRepository
@@ -24,11 +24,14 @@ export class SearchService {
         'embedding.document',
       ])
       .addSelect('embedding.vector <-> :queryEmbedding', 'similarity')
+      .leftJoin('embedding.document', 'document')
       .orderBy('similarity', 'ASC')
-      .setParameter('queryEmbedding', queryEmbedding)
       .take(topK)
-      .getMany();
+      .getRawMany();
 
-    return results;
+    return results.map(result => ({
+      chunk: result.embedding_chunk,
+      filename: result.filename,
+    }));
   }
 }
