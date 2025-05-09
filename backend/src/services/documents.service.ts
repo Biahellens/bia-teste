@@ -41,6 +41,11 @@ export class DocumentsService {
         const content = await fs.readFile(filePath, 'utf-8');
         savedDocument.content = content;
         await this.documentRepository.save(savedDocument);
+
+        const chunks = this.chunkDocumentContent(savedDocument);
+        console.log('Document Chunks:', chunks);
+        savedDocument.status = 'processing';
+        await this.documentRepository.save(savedDocument);
       } catch (error) {
         console.error('Error reading text file:', error);
         savedDocument.errorMessage = 'Error reading file content';
