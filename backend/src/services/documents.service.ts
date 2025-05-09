@@ -6,6 +6,7 @@ import { Workspace } from '../entities/workspace.entity';
 import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
 import type { EmbeddingsService } from './embeddings.service';
+import { Embedding } from '../entities/embedding.entity';
 
 @Injectable()
 export class DocumentsService {
@@ -14,6 +15,8 @@ export class DocumentsService {
     private readonly documentRepository: Repository<Document>,
     @InjectRepository(Workspace)
     private readonly workspaceRepository: Repository<Workspace>,
+    @InjectRepository(Embedding) // Injete o repositório de Embedding
+    private readonly embeddingRepository: Repository<Embedding>,
     private readonly embeddingsService: EmbeddingsService,
 
   ) { }
@@ -58,6 +61,15 @@ export class DocumentsService {
 
         const embeddingsResults = await Promise.all(embeddingsPromises);
         console.log('Embeddings Results:', embeddingsResults.length, 'embeddings generated.');
+
+        for (const result of embeddingsResults) {
+          const embeddingEntity = this.embeddingRepository.create({
+            document: savedDocument,
+            chunk: result.chunk,
+            vector: result.embedding,
+          });
+          await this.embeddingRepository.save(embeddingEntity);
+        }
 
         savedDocument.status = 'completed';
         await this.documentRepository.save(savedDocument);
