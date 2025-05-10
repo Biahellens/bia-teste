@@ -11,6 +11,7 @@ import { EmbeddingsModule } from "./modules/embeddings.module";
 import { ConfigModule } from '@nestjs/config';
 import { SearchModule } from "./modules/search.module";
 import { AuthModule } from "./modules/auth.module";
+import { WorkspacesModule } from "./modules/workspaces.module";
 
 @Module({
 	imports: [
@@ -40,6 +41,7 @@ import { AuthModule } from "./modules/auth.module";
 			synchronize: true,
 		}),
 		AuthModule,
+		WorkspacesModule,
 		DocumentsModule,
 		EmbeddingsModule,
 		SearchModule,
