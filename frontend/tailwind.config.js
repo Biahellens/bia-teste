@@ -39,7 +39,7 @@ export default {
       primary: {
         200: "#98AEFF",
         350: "rgba(0, 28, 242, 0.07)",
-        400: "rgba(0, 28, 242, 0.08)",
+        400: "#0000CD",
         700: "#001CF2",
       },
       secondary: {
