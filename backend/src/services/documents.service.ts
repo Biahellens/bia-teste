@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
 import { Document } from '../entities/document.entity';
 import { Workspace } from '../entities/workspace.entity';
 import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
-import type { EmbeddingsService } from './embeddings.service';
-import { Embedding } from '../entities/embedding.entity';
+import { EmbeddingsService } from './embeddings.service';
+import { Embedding } from '../entities/embedding.entity'
 
 @Injectable()
 export class DocumentsService {
@@ -15,10 +15,10 @@ export class DocumentsService {
     private readonly documentRepository: Repository<Document>,
     @InjectRepository(Workspace)
     private readonly workspaceRepository: Repository<Workspace>,
-    @InjectRepository(Embedding) // Injete o repositório de Embedding
+    @InjectRepository(Embedding)
     private readonly embeddingRepository: Repository<Embedding>,
+    @Inject(forwardRef(() => EmbeddingsService))
     private readonly embeddingsService: EmbeddingsService,
-
   ) { }
 
   async uploadDocument(

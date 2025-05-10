@@ -1,14 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import OpenAI from 'openai';
-import type { ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config'; // Importe explicitamente ConfigService
 
 @Injectable()
 export class EmbeddingsService {
   private readonly openai: OpenAI;
   private readonly embeddingModel: string;
 
-  constructor(private readonly configService: ConfigService) {
-    const apiKey = this.configService.get<string>(process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY : "");
+  constructor(
+    @Inject(ConfigService) private readonly configService: ConfigService, 
+  ) {
+    const apiKey = this.configService.get<string>('OPENAI_API_KEY');
     if (!apiKey) {
       throw new Error('OPENAI_API_KEY not configured in environment variables.');
     }

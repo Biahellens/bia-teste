@@ -1,16 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
 import { Embedding } from '../entities/embedding.entity';
-import type { EmbeddingsService } from './embeddings.service';
+import { EmbeddingsService } from './embeddings.service';
 
 @Injectable()
 export class SearchService {
   constructor(
     @InjectRepository(Embedding)
     private readonly embeddingRepository: Repository<Embedding>,
+    @Inject(forwardRef(() => EmbeddingsService))
     private readonly embeddingsService: EmbeddingsService,
-  ) {}
+  ) { }
 
   async search(query: string, topK: number): Promise<{ chunk: string; filename: string }[]> {
     const queryEmbedding = await this.embeddingsService.generateEmbedding(query);

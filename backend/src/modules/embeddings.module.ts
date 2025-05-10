@@ -7,4 +7,4 @@ import { ConfigModule } from '@nestjs/config';
   providers: [EmbeddingsService],
   exports: [EmbeddingsService],
 })
-export class EmbeddingsModule {}
+export class EmbeddingsModule { }

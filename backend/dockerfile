@@ -11,7 +11,6 @@ RUN mkdir -p uploads
 COPY . .
 
 RUN pnpm install
-
 RUN pnpm build
 
 CMD ["node", "dist/main"]

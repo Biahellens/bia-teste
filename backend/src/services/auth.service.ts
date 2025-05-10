@@ -1,20 +1,25 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException, forwardRef, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import type { RegisterDto, LoginDto } from '../dtos/auth.dto';
 import * as bcrypt from 'bcrypt';
-import type { JwtService } from '@nestjs/jwt';
-import type { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
+  jwtSecret: string | undefined;
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @Inject(forwardRef(() => JwtService))
     private readonly jwtService: JwtService,
+    @Inject(ConfigService)
     private readonly configService: ConfigService,
-  ) { }
+  ) {
+    console.log('ConfigService no AuthService:', this.configService); 
+  }
 
   async register(registerDto: RegisterDto): Promise<User> {
     const { username, password } = registerDto;

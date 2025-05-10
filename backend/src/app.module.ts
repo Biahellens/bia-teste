@@ -3,15 +3,15 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
-import { Workspace } from "./entities/workspace.entity";
-import { Document } from "./entities/document.entity";
-import { Embedding } from "./entities/embedding.entity";
 import { DocumentsModule } from "./modules/documents.module";
 import { EmbeddingsModule } from "./modules/embeddings.module";
 import { ConfigModule } from '@nestjs/config';
 import { SearchModule } from "./modules/search.module";
 import { AuthModule } from "./modules/auth.module";
 import { WorkspacesModule } from "./modules/workspaces.module";
+import { Embedding } from "./entities/embedding.entity";
+import { Workspace } from "./entities/workspace.entity";
+import { Document } from "./entities/document.entity";
 
 @Module({
 	imports: [
@@ -43,8 +43,8 @@ import { WorkspacesModule } from "./modules/workspaces.module";
 		AuthModule,
 		WorkspacesModule,
 		DocumentsModule,
-		EmbeddingsModule,
 		SearchModule,
+		EmbeddingsModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
