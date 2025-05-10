@@ -10,6 +10,7 @@ import { DocumentsModule } from "./modules/documents.module";
 import { EmbeddingsModule } from "./modules/embeddings.module";
 import { ConfigModule } from '@nestjs/config';
 import { SearchModule } from "./modules/search.module";
+import { AuthModule } from "./modules/auth.module";
 
 @Module({
 	imports: [
@@ -38,6 +39,7 @@ import { SearchModule } from "./modules/search.module";
 			autoLoadEntities: true,
 			synchronize: true,
 		}),
+		AuthModule,
 		DocumentsModule,
 		EmbeddingsModule,
 		SearchModule,
