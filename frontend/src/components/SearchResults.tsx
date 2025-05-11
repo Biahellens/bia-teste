@@ -7,16 +7,28 @@ interface SearchResultsProps {
 const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-2">Resultados da Busca</h2>
+      <h4 className="text-[1.2rem] font-bold text-neutral-700">Resultados da Busca</h4>
       {results.length > 0 ? (
-        <div className="list-disc pl-5">
+        <table className="w-full divide-y divide-neutral-300 border border-neutral-300">
+          <thead className="bg-gray-100">
+
+            <tr>
+              <th className="px-[1rem] py-[0.5rem] text-left text-[0.875rem] font-semibold text-neutral-700">Parte do file</th>
+              <th className="px-[1rem] py-[0.5rem] text-left text-[0.875rem] font-semibold text-neutral-700">Nome do arquivo</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-neutral-300">
+
+          </tbody>
           {results.map((result) => (
-            <div key={result.filename} className="mb-2">
-              <p className="text-gray-800">{result.chunk}</p>
-              <p className="text-gray-500 text-sm">Fonte: {result.filename}</p>
-            </div>
+            <tr key={result.filename} className="cursor-pointer hover:bg-neutral-200 transition-colors">
+              <td className="px-[1rem] py-[0.5rem] text-[0.875rem] text-neutral-800">
+                {result.chunk}
+              </td>
+              <td className="px-[1rem] py-[0.5rem] text-[0.875rem] text-neutral-800">Fonte: {result.filename}</td>
+            </tr>
           ))}
-        </div>
+        </table >
       ) : (
         <p className="text-gray-600">Nenhum resultado encontrado.</p>
       )}

@@ -32,7 +32,7 @@ const FileUpload: React.FC = () => {
     }
     catch (error: unknown) {
       if (error instanceof Error) {
-        setUploadStatus(`Erro no envio: ${error.message}`);
+        setUploadStatus(`${error.message}`);
       }
       setUploadStatus("Erro no envio: erro desconhecido");
     }
@@ -40,26 +40,27 @@ const FileUpload: React.FC = () => {
   };
 
   return (
-    <div className="mb-4">
-      <h2 className="text-xl font-semibold mb-2">Upload de Documento</h2>
-      <div className="flex items-center space-x-4">
-        <input type="file" onChange={handleFileChange} className="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+    <div className='flex flex-col gap-[0.5rem]'>
+      <h2 className="text-[1.2rem] font-bold text-neutral-700">Upload de Documento</h2>
+      <div className="w-full flex flex-row max-md:flex-col items-center gap-[1.5rem max-md:gap-[0.5rem]">
+        <input type="file" onChange={handleFileChange} className="shadow appearance-none border border-neutral-300 rounded-[0.5rem] w-[30rem] max-md:w-full h-[3rem] py-[0.5rem] px-[0.5rem] text-neutral-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
         <input
           type="text"
           placeholder="ID do Workspace"
           value={workspaceId}
           onChange={handleWorkspaceIdChange}
-          className="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border border-neutral-300 rounded-[0.5rem] w-[15rem] max-md:w-full h-[2.5rem] px-[0.5rem] text-neutral-700 leading-tight focus:outline-none focus:shadow-outline"
         />
         <button
           type='submit'
           onClick={handleUpload}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="w-[8rem] max-md:w-full bg-primary-700 hover:bg-primary-700 text-white-0 font-semibold py-[0.5rem] px-[1rem] rounded focus:outline-none focus:shadow-outline"
         >
           Enviar
         </button>
       </div>
-      {uploadStatus && <p className="mt-2 text-sm">{uploadStatus}</p>}
+      {uploadStatus && <p className="text-[0.875rem]">{uploadStatus}</p>}
     </div>
   );
 };

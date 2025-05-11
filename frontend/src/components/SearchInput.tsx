@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { searchDocuments } from '../services/service';
 
 interface SearchInputProps {
-  onSearch: (results: { chunk: string; filename: string }[]) => void;
+  onSearch: (results: { chunk: string; filename: string }[]) => void
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
@@ -25,25 +25,24 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
         }
         console.error('Erro na busca: erro desconhecido');
       }
-
     }
   };
 
   return (
-    <div className="mb-4">
-      <h2 className="text-xl font-semibold mb-2">Buscar Documentos</h2>
-      <div className="flex items-center space-x-2">
+    <div className='flex flex-col gap-[0.5rem]'>
+      <h3 className="text-[1.2rem] font-bold text-neutral-700">Buscar Documentos</h3>
+      <div className="w-full flex flex-row max-md:flex-col items-center gap-[1.5rem max-md:gap-[0.5rem]">
         <input
           type="text"
           placeholder="Digite sua busca..."
           value={query}
           onChange={handleInputChange}
-          className="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline flex-grow"
+          className="shadow appearance-none border border-neutral-300 rounded-[0.5rem] w-[46.25rem] max-md:w-full h-[2.5rem] px-[0.5rem] text-neutral-700 leading-tight focus:outline-none focus:shadow-outline"
         />
         <button
           type='button'
           onClick={handleSearch}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="w-[8rem] max-md:w-full bg-primary-700 hover:bg-primary-700 text-white-0 font-semibold py-[0.5rem] px-[1rem] rounded focus:outline-none focus:shadow-outline"
         >
           Buscar
         </button>
