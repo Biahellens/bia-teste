@@ -20,7 +20,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://user123:senha123@db:5432/backendDB
       depends_on:
       - db
     volumes:
