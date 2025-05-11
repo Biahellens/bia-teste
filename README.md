@@ -84,6 +84,15 @@ Para executar o projeto localmente, siga os seguintes passos:
 #### Registro
 ![REGISTRO](https://github.com/Biahellens/bia-teste/blob/main/telas/tela%20de%20registro.png)
 
+#### Workspace
+![WORKSPACE](https://github.com/Biahellens/bia-teste/blob/main/telas/tela%20workspace.png)
+
+#### Dashboard sem resultados
+![DASHBOARD1](https://github.com/Biahellens/bia-teste/blob/main/telas/tela%20dashboard%20sem%20reultado.png)
+
+#### Dashboard com resultados
+![DASHBOARD2](https://github.com/Biahellens/bia-teste/blob/main/telas/tela%20dashboard%20com%20resultado.png)
+
 ### Contribuição
 
 Se você deseja contribuir para este projeto, por favor, siga os seguintes passos:
