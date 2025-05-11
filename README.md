@@ -76,6 +76,14 @@ Para executar o projeto localmente, siga os seguintes passos:
 
 6.  **Acesse a aplicação:** Após os containers serem iniciados com sucesso, você poderá acessar o frontend da aplicação através do seu navegador, em `http://localhost:5173/`. O backend estará rodando em `http://localhost:3000`.
 
+### Telas
+
+#### Login
+![LOGIN](https://github.com/Biahellens/bia-teste/blob/main/telas/tela%20de%20login.png)
+
+#### Registro
+![REGISTRO](https://github.com/Biahellens/bia-teste/blob/main/telas/tela%20de%20registro.png)
+
 ### Contribuição
 
 Se você deseja contribuir para este projeto, por favor, siga os seguintes passos:
