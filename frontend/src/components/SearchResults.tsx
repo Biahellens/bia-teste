@@ -6,7 +6,7 @@ interface SearchResultsProps {
 
 const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
   return (
-    <div>
+    <div className='flex flex-col gap-[1.5rem]'>
       <h4 className="text-[1.2rem] font-bold text-neutral-700">Resultados da Busca</h4>
       {results.length > 0 ? (
         <table className="w-full divide-y divide-neutral-300 border border-neutral-300">
