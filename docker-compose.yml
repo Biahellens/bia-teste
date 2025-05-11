@@ -21,13 +21,25 @@ services:
       - "3000:3000"
     environment:
       DATABASE_URL: postgres://user123:senha123@db:5432/backendDB
-      JWT_SECRET: f26e4ae57d5e327def190b9bc13b67d08b5a4d3445d6d9538c4b2f5b7d138812637cc2bbce05e0b65042b82727f7a8b0ee70d06ddf88cdf973ac79b0cc1027950ebdf12065a2ecb42315209fe7c7e7a3c01a8cce943f48cfcb241dc3ea8032649318901df76f1c0487337ff5eafbd5873878fe0bd12fddfa154c023ad560502c2c3500bbeec124af666fb882cdccba4e50d561abd822e38a1ffc72e5726ac39073ab1864173458a9e996776740834eb0c1b9b3a910244ebd04ce68f7c5283c450b35b5510eb25c1e7c7a475cf0b1d28d04279f2bdded550d5d24004a519cf21a2902886103512db7145779ed73578bdca3d694bf3ed3894d67c72a80469781ba
-    depends_on:
+      depends_on:
       - db
     volumes:
       - ./backend:/usr/src/app
       - node_modules_backend:/usr/src/app/node_modules
 
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/usr/src/app
+      - node_modules_frontend:/usr/src/app/node_modules
+    depends_on:
+      - backend
+    environment:
+      REACT_APP_API_URL: http://backend:3000
+
 volumes:
   db_data:
   node_modules_backend:
+  node_modules_frontend:
