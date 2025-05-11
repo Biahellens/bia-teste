@@ -47,7 +47,7 @@ Para executar o projeto localmente, siga os seguintes passos:
 
 2.  **Clone o repositório do projeto:**
 
-3.  **Configure as variáveis de ambiente:** Crie um arquivo `.env` na raiz do seu backend e defina as variáveis de ambiente necessárias como a URL do banco de dados PostgreSQL, a chave da API da OpenAI ou do HuggingFace, a chave secreta do JWT, etc. Exemplo de `.env` para o backend:
+3.  **Configure as variáveis de ambiente:** Crie um arquivo `.env` na raiz do seu backend e defina as variáveis de ambiente necessárias como a URL do banco de dados PostgreSQL, a chave da API da OpenAI, a chave secreta do JWT, etc. Exemplo de `.env` para o backend:
 
     ```
     DATABASE_URL=postgres://user:password@host:port/database
@@ -56,7 +56,17 @@ Para executar o projeto localmente, siga os seguintes passos:
     OPENAI_EMBEDDING_MODEL=text-embedding-ada-002
     ```
 
-4.  **Execute o Docker Compose:** Na raiz do seu projeto (onde o arquivo `docker-compose.yml` está localizado), execute o seguinte comando para construir e iniciar os containers definidos:
+4. **Configure as variáveis de ambiente no Docker:** No arquivo `docker-compose.yml` localizado na raiz do seu projeto adicione as seguintes variaveis:
+
+    ```
+    DATABASE_URL=postgres://user:password@host:port/database
+    JWT_SECRET=sua_chave_secreta_jwt
+    OPENAI_API_KEY=sua_chave_api_openai
+    ```
+
+    Abaixo da linha `environment:`
+
+5.  **Execute o Docker Compose:** Na raiz do seu projeto (onde o arquivo `docker-compose.yml` está localizado), execute o seguinte comando para construir e iniciar os containers definidos:
 
     ```bash
     docker-compose up -d --build
@@ -64,17 +74,7 @@ Para executar o projeto localmente, siga os seguintes passos:
 
     A flag `-d` executa os containers em segundo plano, e a flag `--build` garante que as imagens sejam construídas novamente caso haja alterações no `Dockerfile` ou no `docker-compose.yml`.
 
-5.  **Acesse a aplicação:** Após os containers serem iniciados com sucesso, você poderá acessar o frontend da aplicação através do seu navegador, geralmente em `http://localhost:5173/` (a porta pode ser definida no seu `docker-compose.yml` ou nas configurações do Next.js). O backend estará rodando em `http://localhost:3000` (também definido no `docker-compose.yml`).
-
-### Frontend:
-
-Iniciando o frontend
-
-```bash
-  $ cd frontend
-  $ pnpm install
-  $ pnpm start
-```
+6.  **Acesse a aplicação:** Após os containers serem iniciados com sucesso, você poderá acessar o frontend da aplicação através do seu navegador, em `http://localhost:5173/`. O backend estará rodando em `http://localhost:3000`.
 
 ### Contribuição
 
