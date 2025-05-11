@@ -21,7 +21,7 @@ const Login: React.FC = () => {
       navigate('/workspaces');
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setErrorMessage(`Erro ao fazer login: ${error.message}`);
+        setErrorMessage(`${error.message}`);
       }
     }
   };

@@ -18,7 +18,7 @@ const Register: React.FC = () => {
       navigate('/login');
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setErrorMessage(`Erro ao registrar: ${error.message}`);
+        setErrorMessage(`${error.message}`);
       }
     }
   };
