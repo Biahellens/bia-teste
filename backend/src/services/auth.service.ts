@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import type { RegisterDto, LoginDto } from '../dtos/auth.dto';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
@@ -18,7 +18,7 @@ export class AuthService {
     @Inject(ConfigService)
     private readonly configService: ConfigService,
   ) {
-    console.log('ConfigService no AuthService:', this.configService); 
+    console.log('ConfigService no AuthService:', this.configService);
   }
 
   async register(registerDto: RegisterDto): Promise<User> {
