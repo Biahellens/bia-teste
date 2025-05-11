@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    build: ./db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: user123
+      POSTGRES_PASSWORD: senha123
+      POSTGRES_DB: backendDB
+    ports:
+      - "5433:5432"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      depends_on:
+      - db
+    volumes:
+      - ./backend:/usr/src/app
+      - node_modules_backend:/usr/src/app/node_modules
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/usr/src/app
+      - node_modules_frontend:/usr/src/app/node_modules
+    depends_on:
+      - backend
+    environment:
+      REACT_APP_API_URL: http://backend:3000
+
+volumes:
+  db_data:
+  node_modules_backend:
+  node_modules_frontend:
